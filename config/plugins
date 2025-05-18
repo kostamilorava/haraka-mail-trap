@@ -1,0 +1,17 @@
+# config/plugins
+
+early_talker
+
+rcpt_to.in_host_list
+
+# Parses and makes email headers available to other plugins.
+headers
+
+# Checks if mandatory ENV's are provided
+env_checker
+# Used to auth each email receive process
+http_auth
+# Forwards inbound email to third party service
+email_http_forwarder
+
+queue/discard
