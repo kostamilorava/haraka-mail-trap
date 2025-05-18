@@ -1,13 +1,12 @@
-version: "3.9"
-
+# This file can be used for development purposes
 services:
   haraka:
     build:
       dockerfile: Dockerfile
     environment:
-      - AUTH_URL=http://host.docker.internal/api/haraka/mailtrap-auth
-      - INBOUND_MAIL_URL=http://host.docker.internal/api/haraka/mail-trap
-      - API_TOKEN=abc123
+      AUTH_URL: '${WWWUSER}'
+      INBOUND_MAIL_URL: '${INBOUND_MAIL_URL}'
+      API_TOKEN: '${API_TOKEN}'
     volumes:
       - ./:/app
     image: 'haraka'

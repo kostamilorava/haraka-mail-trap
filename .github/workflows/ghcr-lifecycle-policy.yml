@@ -45,7 +45,7 @@ jobs:
       #     ignore-versions: ^cache-main|[0-9]+
       #     min-versions-to-keep: 3
 
-      # - name: Keep only last 1 temporar image
+      # - name: Keep only last 1 temporary image
       #   uses: actions/delete-package-versions@v5
       #   with:
       #     package-name: ${{ env.REPO }}
