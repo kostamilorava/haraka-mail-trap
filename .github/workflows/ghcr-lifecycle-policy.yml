@@ -1,0 +1,54 @@
+name: Free up GitHub container registry
+
+permissions:
+  packages: write
+
+concurrency:
+  group: ghcr-lifecycle-policy
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 20 * * *"
+
+jobs:
+  delete-versions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set repository name as env variable
+        run: |
+          echo "REPO=${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}" >> $GITHUB_ENV
+
+      - name: Delete all untagged images
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: ${{ env.REPO }}
+          package-type: container
+          delete-only-untagged-versions: true
+
+      # Untill https://github.com/actions/delete-package-versions/issues/88 is fixed,
+      # just delete all but last 5 images.
+      - name: Leave only 5 images
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: ${{ env.REPO }}
+          package-type: container
+          min-versions-to-keep: 5
+
+      # - name: Keep only last 3 cache images
+      #   uses: actions/delete-package-versions@v5
+      #   with:
+      #     package-name: ${{ env.REPO }}
+      #     package-type: container
+      #     ignore-versions: ^cache-main|[0-9]+
+      #     min-versions-to-keep: 3
+
+      # - name: Keep only last 1 temporar image
+      #   uses: actions/delete-package-versions@v5
+      #   with:
+      #     package-name: ${{ env.REPO }}
+      #     package-type: container
+      #     ignore-versions: ^cache-
+      #     min-versions-to-keep: 1
