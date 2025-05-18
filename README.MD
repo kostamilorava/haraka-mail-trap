@@ -6,7 +6,9 @@ This repository contains Haraka configuration as well as dockerfile that:
 
 * Listens to SMTP
 * When email is received, calls auth endpoint
-* If auth endpoint returns status 200, it forwards plain email text to third party service.
+* If auth endpoint returns status 200, it forwards plain email text to third party service
+
+You can use `ghcr.io/kostamilorava/haraka-mail-trap:latest` in docker compose or commands.
 
 # Required variables
 
